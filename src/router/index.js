@@ -22,4 +22,8 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ '@/views/About')
     },
   ],
+  // 解决 vue 进入页面滚动条位置不现实在顶部问题
+  scrollBehavior (to, from, savedPosition) {
+    return { x: 0, y: 0 }
+  }
 })
