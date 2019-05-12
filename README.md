@@ -22,7 +22,7 @@ npm run test
 
 ### Run your app
 ```
-npm run test
+npm run app
 ```
 
 ### Lints and fixes files
