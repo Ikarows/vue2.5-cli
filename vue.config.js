@@ -13,6 +13,8 @@ module.exports = {
       }
     }
   },
+  // 去除打包后生成的map文件
+  productionSourceMap: false,
   configureWebpack: { // plugins
     plugins: [
     //   new UglifyJsPlugin({
