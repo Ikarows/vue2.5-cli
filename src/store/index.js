@@ -5,8 +5,8 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   modules: {
-		auth
-	}
+    auth
+  }
 })
 
 export default store

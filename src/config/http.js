@@ -3,31 +3,17 @@
  * 请求拦截、相应拦截、错误统一处理
  */
 import axios from 'axios'
-import { Toast } from 'vant'
+import router from '@/router'
 import store from '@/store'
-
-// 环境的切换
-if (process.env.VUE_APP_SECRET == 'development') {
-  // 开发环境
-  axios.defaults.baseURL = 'https://api.imjad.cn'
-} else if (process.env.VUE_APP_SECRET == 'tests') {
-  // 测试环境
-  axios.defaults.baseURL = 'https://test.imjad.cn'
-}else if (process.env.VUE_APP_SECRET == 'production') {
-  // 生产环境
-  axios.defaults.baseURL = 'https://build.imjad.cn'
-} else if (process.env.VUE_APP_SECRET == 'apps') {
-  // app 环境
-  axios.defaults.baseURL = 'https://app.imjad.cn'
-}
+import { Toast } from 'vant'
 
 // 请求超时时间
-axios.defaults.timeout = 10000 //10s
+axios.defaults.timeout = 10000 // 10s
 
 // post请求头
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 
-//刷新页面重新设置token进store
+// 刷新页面重新设置token进store
 sessionStorage.token ? store.commit('auth/SET_TOKEN', sessionStorage.token) : ''
 
 // 请求拦截器
@@ -78,8 +64,8 @@ axios.interceptors.response.use(
             forbidClick: true
           })
           // 清除token
-          localStorage.removeItem('token');
-          store.commit('loginSuccess', null);
+          localStorage.removeItem('token')
+          store.commit('loginSuccess', null)
           // 跳转登录页面，并将要浏览的页面fullPath传过去，登录成功后跳转需要访问的页面
           setTimeout(() => {
             router.replace({
@@ -87,7 +73,7 @@ axios.interceptors.response.use(
               query: {
                 redirect: router.currentRoute.fullPath
               }
-            });
+            })
           }, 1000)
           break
           // 404请求不存在
@@ -110,3 +96,9 @@ axios.interceptors.response.use(
     }
   }
 )
+
+// 路由拦截
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title
+  next()
+})

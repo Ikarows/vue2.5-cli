@@ -1,29 +1,34 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <p>{{message}}</p>
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <p>{{ message }}</p>
+    <HelloWorld msg="Welcome to Your Vue.js App" />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
-import api from '../api'
+import HelloWorld from '@/components/HelloWorld'
+import api from '@/api'
+import { Toast } from 'vant'
 export default {
-  name: 'home',
-  data() {
+  name: 'Home',
+  components: {
+    HelloWorld
+  },
+  data () {
     return {
-      message: '',
+      message: ''
     }
   },
-  components: {
-    HelloWorld,
+  mounted () {
+    this.loading = false
   },
-  created() {
-    api.hitokoto().then(res => {
-      this.message = res;
-    });
-  },
-};
+  created () {
+    Toast('提示内容')
+    api.hitokoto().then((res) => {
+      this.message = res
+    })
+  }
+}
 </script>

@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/views/Home'
 
 Vue.use(Router)
 
@@ -11,16 +10,15 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: () => import('@/views/Home'),
+      meta: { title: '首页' }
     },
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ '@/views/About')
-    },
+      component: () => import('@/views/About'),
+      meta: { title: '关于我们' }
+    }
   ],
   // 解决 vue 进入页面滚动条位置不在顶部问题
   scrollBehavior (to, from, savedPosition) {
