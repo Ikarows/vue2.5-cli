@@ -1,3 +1,6 @@
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const productionGzipExtensions = ['js', 'css']
 module.exports = {
   // 基本路径
   publicPath: './',
@@ -5,7 +8,6 @@ module.exports = {
   indexPath: 'index.html',
   // 输出文件目录
   outputDir: 'dist',
-  // 配置webpack开发服务功能
   css: { // loader
     loaderOptions: {
       sass: {
@@ -15,30 +17,42 @@ module.exports = {
   },
   // 去除打包后生成的map文件
   productionSourceMap: false,
-  configureWebpack: { // plugins
-    plugins: [
-    //   new UglifyJsPlugin({
-    //     uglifyOptions: {
-    //       compress: {
-    //         warnings: false,
-    //         drop_console: false,
-    //         drop_debugger: false,
-    //         pure_funcs: ['console.log']
-    //       }
-    //     }
-    // })
-    ]
+  // 移除 prefetch 插件
+  chainWebpack: config => {
+    config.plugins.delete('prefetch')
   },
-  devServer: {
+  configureWebpack: config => {
+    [
+      new UglifyJsPlugin({
+        uglifyOptions: {
+          compress: {
+            drop_debugger: true,
+            drop_console: true // 生产环境自动删除console
+          },
+          warnings: false
+        },
+        sourceMap: false,
+        parallel: true // 使用多进程并行运行来提高构建速度。默认并发运行数：os.cpus().length - 1。
+      }),
+
+      // gzip
+      new CompressionWebpackPlugin({
+        filename: '[path].gz[query]',
+        algorithm: 'gzip',
+        test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
+        threshold: 10240,
+        minRatio: 0.8
+      })
+    ]
+  }
+  /* devServer: {
     // 服务端压缩是否开启
     compress: true,
     // 配置服务端口号
     port: 8090,
     proxy: {
       '/api.php': {
-        // target: 'http://t1088.youmitu.com/',
-        // target: 'http://t1175.youmitu.com/',
-        target: 'http://t1175.kakaapp.com/',
+        target: 'https://v1.hitokoto.cn',
         ws: true,
         changeOrigin: true,
         pathRewrite: {
@@ -46,5 +60,5 @@ module.exports = {
         }
       }
     }
-  }
+  }*/
 }

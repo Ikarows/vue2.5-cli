@@ -1,6 +1,4 @@
 import { get, post } from '@/config/request'
 
-export default {
-  hitokoto: p => get('/hitokoto/', p),
-  postDemo: p => post('/hitokoto/', p)
-}
+export const hitokoto = p => get('/?c=b', p)
+export const postDemo = p => post('/?c=b', p)

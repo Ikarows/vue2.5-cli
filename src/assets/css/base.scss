@@ -164,7 +164,7 @@ img {
 	vertical-align: middle;
 }
 
-$fsz:50;
+$fsz: 100;
 
 @function rem($val) {
 	@return $val / $fsz * 1rem;

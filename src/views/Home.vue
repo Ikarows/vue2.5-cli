@@ -7,12 +7,9 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld'
-import api from '@/api'
-import { Toast } from 'vant'
+import { hitokoto } from '@/api'
 export default {
-  name: 'Home',
   components: {
     HelloWorld
   },
@@ -25,8 +22,7 @@ export default {
     this.loading = false
   },
   created () {
-    Toast('提示内容')
-    api.hitokoto().then((res) => {
+    hitokoto().then((res) => {
       this.message = res
     })
   }
