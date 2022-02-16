@@ -16,7 +16,7 @@ Vue.use(Popup)
 axios.defaults.baseURL = 'https://v1.hitokoto.cn'
 
 Vue.config.productionTip = false
-Vue.prototype.$ua = ua
+Vue.prototype.$ua = ua.ua
 
 new Vue({
   router,
