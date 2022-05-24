@@ -1,4 +1,14 @@
 'use strict'
+
+/**
+ * scp2 代码自动化部署
+ * @export
+ * @params { npm run upload -- dev } 上传dist文件夹到测试环境
+ * @params { npm run upload -- pro } 上传dist文件夹到正式环境
+ * @params { npm run deploy -- dev } 打包并上传到测试环境（常用）
+ * @params { npm run deploy -- pro } 打包并上传到正式环境（常用）
+ */
+
 // 引入scp2
 var client = require('scp2')
 // 下面三个插件是部署的时候控制台美化所用 可有可无
